@@ -69,6 +69,7 @@ def get_shop_codata(neighborhood, class_list):
 		for shop in dic[neighborhood]:
 			for cl in class_list:
 				if cl in shop['class']:
+					shop['class'] = cl
 					selected_list.append(shop)
 					break
 	except KeyError:
@@ -77,6 +78,7 @@ def get_shop_codata(neighborhood, class_list):
 		return ["no data"]
 	else:
 		return selected_list
+
 
 # print(get_shop_codata('中正里', ['餐館、餐廳']))
 # if __name__ == '__main__':
