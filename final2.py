@@ -342,9 +342,9 @@ class Test(MDGridLayout, MDApp, Widget):
     def add_rent(self, neigh, Min_price = 0, Max_price = 100000000):
         print(Min_price, Max_price)
         rent_list = gd.get_rent_codata(neigh)
-        print(rent_list)
+        # print(rent_list)
         if rent_list == ['no data']:
-            print('no temple data')
+            print('no rent data')
         else:
             cou = 1
             for rent in rent_list:
@@ -505,6 +505,7 @@ class Test(MDGridLayout, MDApp, Widget):
             self.children[0].add_widget(self.rank3)
 
     def second_pressed(self, instance):
+        self.map.children[0].unload()
         a = final_combiner.final_rank([int(self.left.two.input1.text),int(self.left.two.input3.text),int(self.left.two.input5.text)])
         self.rank1.children[1].children[3].text = a[0][0]
         self.rank1.children[1].children[2].text = "人口特性：" + str(a[0][1])
@@ -521,8 +522,11 @@ class Test(MDGridLayout, MDApp, Widget):
         self.rank3.children[1].children[1].text = "新資所得：" + str(a[2][2])
         self.rank3.children[1].children[0].text = "人口消長：" + str(a[2][3])
         self.rank1.bind(on_release = self.add_renk1_marker)
+        self.rank2.bind(on_release = self.add_renk2_marker)
+        self.rank3.bind(on_release = self.add_renk3_marker)
     
     def add_renk1_marker(self, instance):
+        # print(len(self.map.children[2]))
         cla_list = [self.left.three.btn1.text.strip(), self.left.three.btn2.text.strip(), self.left.three.btn3.text.strip()
         , self.left.three.btn4.text.strip()]
         ch_list = [self.left.three.input1.active, self.left.three.input2.active, self.left.three.input3.active
