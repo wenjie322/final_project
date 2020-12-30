@@ -1,9 +1,8 @@
-# 此程式第一部分是用來計算最終輸出分數用，其中dict裡的數據由其他對應的scorer得到
-# 第二部分為取得個別分數的函數
+import math
 
 
 def fin_combiner(list_rank):
-    import math
+    
     # list_rank則表示排名的list,順序為人口組成、薪資、社會增加率
     # 輸出為dict
     dict_edu = {"中正里": 10.0, "中和里": 4.32, "下寮里": 3.59, "安仁里": 3.27, "大庄里": 3.01, "文化里": 2.81, "頂寮里": 2.47,
@@ -55,6 +54,8 @@ def fin_combiner(list_rank):
         human = age/2+edu/2
         com = (human*h_rate+wage*w_rate+socnic*s_rate)/(h_rate+s_rate+w_rate)
         dict_final[dist] = round(com, 2)
+    
+    dict_final = sorted(list(dict_final.items()), key=lambda y: y[1], reverse=True)
     return dict_final
 # 函數fin_combiner到此結束
 
@@ -63,7 +64,7 @@ def fin_express(type, list_rank):
     # type 輸入human,socinc或wage。個別代表人口組成、社會增加率、平均薪資。
     # list_rank則表示排名的list,順序為人口組成、薪資、社會增加率
     # 輸出為dict
-    import math
+
     dict_edu = {"中正里": 10.0, "中和里": 4.32, "下寮里": 3.59, "安仁里": 3.27, "大庄里": 3.01, "文化里": 2.81, "頂寮里": 2.47,
                 "大村里": 2.32, "福德里": 1.82, "南簡里": 1.69, "草湳里": 1.08, "興農里": 0.8, "永安里": 0.77, "永寧里": 0.64}
     dict_mage = {"中正里": 10.0, "中和里": 0, "下寮里": 4.12, "安仁里": 1.32, "大庄里": 9.49, "文化里": 5.12, "頂寮里": 2.16,
@@ -124,7 +125,38 @@ def fin_express(type, list_rank):
     return dict_final
 # fin_express 到此結束
 
+def final_rank(list_rank):
+    
+    a = str(list_rank[0])
+    b = str(list_rank[1])
+    c = str(list_rank[2])
+    
+    #remain = [list_rank[0], list_rank[1], list_rank[]]
+    
+    
+    
+    first = fin_combiner(list_rank)[0][0]
+    list_rank = [int(a),int(b),int(c)]
+    second = fin_combiner(list_rank)[1][0]
+    list_rank = [int(a),int(b),int(c)]
+    third = fin_combiner(list_rank)[2][0]
+    list_rank = [int(a),int(b),int(c)]
+    
+    human_type = fin_express('human', list_rank)
+    list_rank = [int(a),int(b),int(c)]
+    wage_type = fin_express('wage', list_rank)
+    list_rank = [int(a),int(b),int(c)]
+    socinc_type = fin_express('socinc', list_rank)
+    list_rank = [int(a),int(b),int(c)]
+    
+    set1 = [first, human_type[first], wage_type[first], socinc_type[first]]
+    set2 = [second, human_type[second], wage_type[second], socinc_type[second]]
+    set3 = [third, human_type[third], wage_type[third], socinc_type[third]]
+    rank_list = [set1, set2, set3]
+    return rank_list
 
+final_rank([1,2,3])
+'''
 # 以下為測試用，和函數本身無關
 list_dist = ["下寮里", "大村里", "大庄里", "中正里", "中和里", "文化里",
              "永安里", "永寧里", "安仁里", "南簡里", "草湳里", "頂寮里", "福德里", "興農里"]
@@ -139,3 +171,4 @@ for dist in list_dist:
 list_result = sorted(list_result, key=lambda x: (x[1], x[0]), reverse=True)
 for i in range(14):
     print(list_result[i])
+'''
